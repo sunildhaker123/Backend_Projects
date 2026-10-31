@@ -1,6 +1,6 @@
 function validateUserData(req, res, next) {
-  const { email, password } = req.body;
-  console.log(req.body);
+  const { email, password } = req.body || {}; // if user sends req without content-type it will bypass urlencoded() or exprss.json
+  // console.log(req.body);
 
   if (!email || !password) {
     return res.status(400).json({

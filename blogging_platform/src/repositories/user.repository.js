@@ -8,4 +8,10 @@ async function registerUser({ email, password_hash }) {
   });
   return user._id;
 }
-module.exports = { registerUser };
+
+async function findUserByEmail(email) {
+  const user = await userModel.findOne({ email: email });
+  return user;
+}
+findUserByEmail();
+module.exports = { registerUser, findUserByEmail };
