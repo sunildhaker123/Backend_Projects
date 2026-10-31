@@ -2,7 +2,7 @@ const express = require("express");
 const {
   handleRegisterUser,
   handleLoginUser,
-} = require("../controllers/users.controller");
+} = require("../controllers/auth.controller");
 const {
   validateUserData,
 } = require("../middlewares/userDataValidation.middleware");
