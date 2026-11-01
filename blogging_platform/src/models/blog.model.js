@@ -10,8 +10,11 @@ const blogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
       required: true,
+      index: true,
     },
-    body: String,
+    content: {
+      type: String,
+    },
     lastUpdatedAt: {
       type: Date,
       default: Date.now,

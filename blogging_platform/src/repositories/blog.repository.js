@@ -3,7 +3,7 @@ async function createBlogWithUserId({ blogBody, userId }) {
   const blog = await blogModel.create({
     title: blogBody.title,
     author: userId,
-    body: blogBody.body,
+    content: blogBody.content,
   });
   return blog._id;
 }
