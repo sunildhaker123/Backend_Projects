@@ -13,7 +13,7 @@ function verifyUser(req, res, next) {
     return next();
   } catch (error) {
     const message =
-      err.name === "TokenExpiredError"
+      error.name === "TokenExpiredError"
         ? "Session expired, please log in again"
         : "Invalid token";
     return res.status(401).json({ message });

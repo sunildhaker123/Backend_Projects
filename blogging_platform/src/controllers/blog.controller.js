@@ -1,4 +1,8 @@
-const { createBlogWithUserId } = require("../repositories/blog.repository");
+const {
+  createBlogWithUserId,
+  findLatestBlogs,
+  findBlogsByUserId,
+} = require("../repositories/blog.repository");
 
 async function createBlog(req, res, next) {
   //   console.log(req.body);
@@ -23,7 +27,26 @@ async function createBlog(req, res, next) {
       return res.status(400).json({ message: error.message });
     }
     return next(error);
-    next(error);
   }
 }
-module.exports = { createBlog };
+async function getLatestBlogs(req, res, next) {
+  try {
+    const blogs = await findLatestBlogs(10);
+    return res.status(200).json({ count: blogs.length, blogs });
+  } catch (error) {
+    return next(error);
+  }
+}
+async function getBlogsByUser(req, res, next) {
+  try {
+    const { userId } = req.params;
+    if (!userId || userId.trim() === "") {
+      return res.status(400).json({ message: "Invalid User ID format" });
+    }
+    const blogs = await findBlogsByUserId(userId);
+    return res.status(200).json({ count: blogs.length, blogs });
+  } catch (error) {
+    return next(error);
+  }
+}
+module.exports = { createBlog, getLatestBlogs, getBlogsByUser };
