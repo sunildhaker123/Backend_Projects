@@ -5,6 +5,14 @@ const authRoutes = require("./src/routers/auth.router");
 const blogRoutes = require("./src/routers/blog.router");
 const userRoutes = require("./src/routers/user.router");
 
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
