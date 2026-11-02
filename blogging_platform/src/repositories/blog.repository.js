@@ -1,4 +1,10 @@
 const blogModel = require("../models/blog.model");
+class dataNotFoundError extends Error {
+  constructor(status, message) {
+    super(message);
+    this.status = status;
+  }
+}
 async function createBlogWithUserId({ blogBody, userId }) {
   const blog = await blogModel.create({
     title: blogBody.title,
@@ -24,4 +30,19 @@ async function findBlogsByUserId(id) {
     .lean();
   return blogs;
 }
-module.exports = { createBlogWithUserId, findLatestBlogs, findBlogsByUserId };
+async function findBlogById(blogId) {
+  const blog = await blogModel
+    .find({ _id: blogId })
+    .select("title content author createdAt")
+    .lean();
+  if (blog.length == 0) {
+    throw new dataNotFoundError(404, "no data was found");
+  }
+  return blog;
+}
+module.exports = {
+  createBlogWithUserId,
+  findLatestBlogs,
+  findBlogsByUserId,
+  findBlogById,
+};

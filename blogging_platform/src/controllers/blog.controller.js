@@ -2,6 +2,7 @@ const {
   createBlogWithUserId,
   findLatestBlogs,
   findBlogsByUserId,
+  findBlogById,
 } = require("../repositories/blog.repository");
 
 async function createBlog(req, res, next) {
@@ -49,4 +50,16 @@ async function getBlogsByUser(req, res, next) {
     return next(error);
   }
 }
-module.exports = { createBlog, getLatestBlogs, getBlogsByUser };
+async function getBlogById(req, res, next) {
+  try {
+    const { blogId } = req.params;
+    const blog = await findBlogById(blogId);
+    return res.status(200).json(blog);
+  } catch (error) {
+    if (error.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
+    return next(error);
+  }
+}
+module.exports = { createBlog, getLatestBlogs, getBlogsByUser, getBlogById };
