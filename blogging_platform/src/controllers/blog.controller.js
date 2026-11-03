@@ -6,10 +6,8 @@ const {
 } = require("../repositories/blog.repository");
 
 async function createBlog(req, res, next) {
-  //   console.log(req.body);
   try {
     const { title, content } = req.body;
-    console.log(title, content);
     if (typeof title !== "string" || typeof content !== "string") {
       return res
         .status(400)
