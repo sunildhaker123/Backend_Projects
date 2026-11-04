@@ -16,7 +16,7 @@ async function register({ email, password }) {
   const password_hash = await bcrypt.hash(password, 12);
   const userId = await registerUser({ email, password_hash });
   const token = jwt.sign({ sub: userId.toString() }, process.env.JWT_SECRET, {
-    expiresIn: 60 * 60 * 1000,
+    expiresIn: 60 * 60,
   });
   return { userId: userId._id.toString(), token: token };
 }
@@ -30,7 +30,7 @@ async function login({ email, password }) {
     throw new AuthError(401, "Invalid email or password");
   }
   const token = jwt.sign({ sub: user._id.toString() }, process.env.JWT_SECRET, {
-    expiresIn: 60 * 60 * 1000,
+    expiresIn: 60 * 60,
     v,
   });
   return token;
