@@ -3,6 +3,7 @@ const {
   findLatestBlogs,
   findBlogsByUserId,
   findBlogById,
+  deleteBlogById,
 } = require("../repositories/blog.repository");
 
 async function createBlog(req, res, next) {
@@ -60,4 +61,21 @@ async function getBlogById(req, res, next) {
     return next(error);
   }
 }
-module.exports = { createBlog, getLatestBlogs, getBlogsByUser, getBlogById };
+async function deleteBlog(req, res, next) {
+  try {
+    const { blogId } = req.params;
+    await deleteBlogById(blogId, req.userId);
+    return res.status(204).send();
+  } catch (error) {
+    if (error.status)
+      return res.status(error.status).json({ message: error.message });
+    return next(error);
+  }
+}
+module.exports = {
+  createBlog,
+  getLatestBlogs,
+  getBlogsByUser,
+  getBlogById,
+  deleteBlog,
+};

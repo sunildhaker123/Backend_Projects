@@ -40,9 +40,24 @@ async function findBlogById(blogId) {
   }
   return blog;
 }
+async function deleteBlogById(blogId, userId) {
+  try {
+    const result = await blogModel.deleteOne({ _id: blogId, author: userId });
+
+    if (result.deletedCount === 0) {
+      throw new dataNotFoundError(404, "Blog doesn't exist");
+    }
+  } catch (error) {
+    if (error.name === "CastError") {
+      throw new dataNotFoundError(404, "Blog doesn't exist");
+    }
+    throw error;
+  }
+}
 module.exports = {
   createBlogWithUserId,
   findLatestBlogs,
   findBlogsByUserId,
   findBlogById,
+  deleteBlogById,
 };
