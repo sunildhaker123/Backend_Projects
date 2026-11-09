@@ -13,4 +13,5 @@ router.post("/", verifyUser, createBlog);
 router.get("/", getLatestBlogs);
 router.get("/:blogId", getBlogById);
 router.delete("/:blogId", verifyUser, deleteBlog);
+
 module.exports = router;
