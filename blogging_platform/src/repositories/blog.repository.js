@@ -1,3 +1,4 @@
+const { updateBlog } = require("../controllers/blog.controller");
 const blogModel = require("../models/blog.model");
 class dataNotFoundError extends Error {
   constructor(status, message) {
@@ -54,10 +55,13 @@ async function deleteBlogById(blogId, userId) {
     throw error;
   }
 }
+
+async function updateBlogById() {}
 module.exports = {
   createBlogWithUserId,
   findLatestBlogs,
   findBlogsByUserId,
   findBlogById,
   deleteBlogById,
+  updateBlogById,
 };

@@ -4,6 +4,7 @@ const {
   getLatestBlogs,
   getBlogById,
   deleteBlog,
+  updateBlog,
 } = require("../controllers/blog.controller");
 const verifyUser = require("../middlewares/verifyUser.middleware");
 
@@ -13,5 +14,6 @@ router.post("/", verifyUser, createBlog);
 router.get("/", getLatestBlogs);
 router.get("/:blogId", getBlogById);
 router.delete("/:blogId", verifyUser, deleteBlog);
+router.patch("/:blogId", verifyUser, updateBlog);
 
 module.exports = router;

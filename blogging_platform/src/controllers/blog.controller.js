@@ -4,6 +4,7 @@ const {
   findBlogsByUserId,
   findBlogById,
   deleteBlogById,
+  updateBlogById,
 } = require("../repositories/blog.repository");
 
 async function createBlog(req, res, next) {
@@ -72,10 +73,12 @@ async function deleteBlog(req, res, next) {
     return next(error);
   }
 }
+async function updateBlog(req, res, next) {}
 module.exports = {
   createBlog,
   getLatestBlogs,
   getBlogsByUser,
   getBlogById,
   deleteBlog,
+  updateBlog,
 };
