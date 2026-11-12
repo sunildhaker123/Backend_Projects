@@ -73,7 +73,23 @@ async function deleteBlog(req, res, next) {
     return next(error);
   }
 }
-async function updateBlog(req, res, next) {}
+async function updateBlog(req, res, next) {
+  try {
+    const data = req.body;
+    console.log(data);
+    const updatedBlog = await updateBlogById({
+      userId: req.userId,
+      data: data,
+      blogId: req.params.blogId,
+    });
+    return res.status(201).json({ updatedBlog });
+  } catch (error) {
+    if (error.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
+    return next(error);
+  }
+}
 module.exports = {
   createBlog,
   getLatestBlogs,

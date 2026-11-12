@@ -56,7 +56,21 @@ async function deleteBlogById(blogId, userId) {
   }
 }
 
-async function updateBlogById() {}
+async function updateBlogById({ userId, blogId, data }) {
+  try {
+    const updatedBlog = await blogModel.findOneAndUpdate(
+      { _id: blogId, author: userId },
+      { $set: data }, // Update payload
+      { returnDocument: "after", runValidators: true }, // Returns updated doc & runs schema validations
+    );
+    if (!updatedBlog) {
+      throw new dataNotFoundError(404, "Blog doesnt exists");
+    }
+    return updatedBlog;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   createBlogWithUserId,
   findLatestBlogs,
