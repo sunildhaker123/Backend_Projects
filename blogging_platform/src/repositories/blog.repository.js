@@ -1,4 +1,3 @@
-const { updateBlog } = require("../controllers/blog.controller");
 const blogModel = require("../models/blog.model");
 class dataNotFoundError extends Error {
   constructor(status, message) {
